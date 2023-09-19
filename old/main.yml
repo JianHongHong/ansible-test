@@ -1,0 +1,12 @@
+- name: SSH Hardening
+  hosts: dev
+  become: true
+  vars_files:
+    - ../inventories/test/passwd.yml
+  vars:
+    ansible_become_pass: "{{ dev_sudo_pass }}"
+  collections:
+    - devsec.hardening
+  roles:
+    - ssh_hardening
+    - os_hardening

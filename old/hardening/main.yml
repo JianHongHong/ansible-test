@@ -1,0 +1,15 @@
+---
+- name: Start Hardening of servers
+  hosts: dev
+  become: true
+  vars_files:
+    - ../inventories/test/passwd.yml
+  vars:
+    ansible_become_pass: "{{ dev_sudo_pass }}"
+
+  tasks:
+  - name: Run SSH hardening
+    ansible.builtin.include_tasks: ssh-hardening.yml
+  
+  - name: Run OS hardening
+    ansible.builtin.include_tasks: os-hardening.yml

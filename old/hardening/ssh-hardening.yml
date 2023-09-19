@@ -1,0 +1,23 @@
+---
+- name: Check ssh is installed
+  apt:
+    name: openssh-server
+    state: present
+
+- name: Start ssh daemon
+  service:
+    name: ssh
+    state: started
+
+- name: Backup ssh_config
+  ansible.builtin.copy:
+    src: /etc/ssh/sshd_config
+    dest: /etc/ssh/sshd_config.BAK
+    remote_src: yes
+
+# - name: Edit ssh_config
+#   ansible.builtin.copy:
+#     src: /etc/ssh/sshd_config
+#     dest: /etc/ssh/sshd_config.BAK
+#     remote_src: yes
+#     validate: /usr/sbin/visudo -csf %s

@@ -1,0 +1,25 @@
+- name: SSH Hardening
+  hosts: dev
+  become: true
+  vars_files:
+    - inventories/test/passwd.yml
+  vars:
+    ansible_become_pass: "{{ dev_sudo_pass }}"
+  # roles:
+  #   - hardening
+  tasks:
+    - name: Print a message
+      ansible.builtin.debug:
+        msg: "This task runs first and before the example role"
+ 
+    - name: Include the example role and run its tasks
+      include_role:
+        name: hardening
+ 
+    - name: Print a message
+      ansible.builtin.debug:
+        msg: "This task runs after the example role"
+  
+    # - name: Include the example_2 role and run its tasks in the end
+    #   include_role:
+    #     name: example_2
